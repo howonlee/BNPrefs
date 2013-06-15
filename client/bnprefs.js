@@ -33,10 +33,12 @@ Template.question.events({
 function Canvas(){
 	var self = this;
 	var svg;
+	var width = 500;
+	var height = 500;
 	var createSvg = function(){
 		svg = d3.select('#vizwrapper').append('svg')
-			.attr('width', '50%')
-			.attr('height', '50%');
+			.attr('width', width)
+			.attr('height', height);
 	};
 	createSvg();
 	self.clear = function(){
@@ -49,6 +51,10 @@ function Canvas(){
 			return;
 		}
 		if (svg){
+			var force = d3.layout.force()
+				.charge(-2000)
+				.linkDistance(100)
+				.size([width, height]);
 			var edge = svg.selectAll(".edge")
 				.data(data[0][0].edges)
 				.enter().append("line")
@@ -66,7 +72,7 @@ function Canvas(){
 
 			force
 				.nodes(data[0][0].nodes)
-				.edges(data[0][0].edges)
+				.links(data[0][0].edges)
 				.start();
 			force.on("tick", function(){
 				edge.attr("x1", function(d){ return d.source.x; })
