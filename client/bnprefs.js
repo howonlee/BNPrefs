@@ -2,25 +2,25 @@ Surveys = new Meteor.Collection("surveys");
 
 var canvas;
 var data;
+var question;
+/*var currEdge = _.first(_.shuffle(Surveys.find({}).fetch()[0][0].edges));
+Session.set("currEdge", currEdge);
+var currQ = _.first(_.shuffle(currEdge.qs));
+Session.set("currQ", currQ);*/
 
 Meteor.startup(function(){
 	canvas = new Canvas();
-	//var currEdge = _.first(_.shuffle(data[0][0].edges));
-	//Session.set("currEdge", currEdge);
-	//var currQ = _.first(_.shuffle(currEdge.qs));
-	Session.set("currQ", "hello world");
-	
+	question = new Question();
 	Deps.autorun(function(){
 		data = Surveys.find({}).fetch();
 		if (canvas){
 			canvas.draw(data);
 		}
+		if (question){
+			question.setText(data);
+		}
 	});
 });
-
-Template.question.q = function(){
-	return Session.get("currQ");
-};
 
 Template.question.events({
 	// template data, if any, is available in 'this'
@@ -46,6 +46,16 @@ Template.question.events({
 		console.log("You pressed button pos three");
 	}
 });
+
+function Question(){
+	var self = this;
+	self.setText = function(data){
+		if (data.length < 1){
+			return;
+		}
+		$("#q").text(data[0][0].edges[0].qs[0]);
+	};
+}
 
 function Canvas(){
 	var self = this;
