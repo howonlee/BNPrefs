@@ -65,6 +65,11 @@ function Canvas(){
 				.enter()
 				.append("g");
 
+			node.on("mouseover", function(d){
+				//do something later
+			})
+				.call(force.drag);
+
 			var circles = node.append("circle")
 				.attr("class", "node")
 				.attr("r", 20)
