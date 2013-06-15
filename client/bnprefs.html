@@ -1,0 +1,20 @@
+<head>
+  <title>Bayes Net Preferences</title>
+</head>
+
+<body>
+  {{> question}}
+  {{> admin}}
+</body>
+
+<template name="question">
+  <h1>Preference Elicitation</h1>
+  {{q}}
+  <input id="first" type="button" value="Click" />
+  <input id="second" type="button" value="Click" />
+</template>
+
+<template name="admin">
+  <h1>See Data</h1>
+  <div id="vizwrapper"></div>
+</template>
