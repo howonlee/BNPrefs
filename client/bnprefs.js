@@ -1,32 +1,49 @@
 Surveys = new Meteor.Collection("surveys");
 
 var canvas;
+var data;
 
-Meteor.startup( function(){
+Meteor.startup(function(){
 	canvas = new Canvas();
+	//var currEdge = _.first(_.shuffle(data[0][0].edges));
+	//Session.set("currEdge", currEdge);
+	//var currQ = _.first(_.shuffle(currEdge.qs));
+	Session.set("currQ", "hello world");
+	
 	Deps.autorun(function(){
-		var data = Surveys.find({}).fetch();
+		data = Surveys.find({}).fetch();
 		if (canvas){
 			canvas.draw(data);
 		}
 	});
 });
 
-Template.question.q = function () {
-	return "Welcome to bnprefs.";
+Template.question.q = function(){
+	return Session.get("currQ");
 };
 
 Template.question.events({
-	'click #first' : function () {
-		// template data, if any, is available in 'this'
-		if (typeof console !== 'undefined'){
-			console.log("You pressed button one");
-		}
+	// template data, if any, is available in 'this'
+	'click #neg3' : function () {
+		console.log("You pressed button neg three");
 	},
-	'click #second' : function () {
-		if (typeof console !== 'undefined'){
-			console.log("You pressed button two");
-		}
+	'click #neg2' : function () {
+		console.log("You pressed button neg two");
+	},
+	'click #neg1' : function () {
+		console.log("You pressed button neg one");
+	},
+	'click #zero' : function () {
+		console.log("You pressed button zero");
+	},
+	'click #pos1' : function () {
+		console.log("You pressed button pos one");
+	},
+	'click #pos2' : function () {
+		console.log("You pressed button pos two");
+	},
+	'click #pos3' : function () {
+		console.log("You pressed button pos three");
 	}
 });
 
