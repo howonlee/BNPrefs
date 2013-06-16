@@ -27,32 +27,45 @@ Template.question.events({
 	'click #neg3' : function () {
 		Meteor.call("vote", -3, Session.get("currEdge"));
 		console.log("You pressed button neg three");
+		Clicked();
 	},
 	'click #neg2' : function () {
 		Meteor.call("vote", -2, Session.get("currEdge"));
 		console.log("You pressed button neg two");
+		Clicked();
 	},
 	'click #neg1' : function () {
 		Meteor.call("vote", -1, Session.get("currEdge"));
 		console.log("You pressed button neg one");
+		Clicked();
 	},
 	'click #zero' : function () {
 		Meteor.call("vote", 0, Session.get("currEdge"));//this has a purpose, don't delete
 		console.log("You pressed button zero");
+		Clicked();
 	},
 	'click #pos1' : function () {
 		Meteor.call("vote", 1, Session.get("currEdge"));
 		console.log("You pressed button pos one");
+		Clicked();
 	},
 	'click #pos2' : function () {
 		Meteor.call("vote", 2, Session.get("currEdge"));
 		console.log("You pressed button pos two");
+		Clicked();
 	},
 	'click #pos3' : function () {
 		Meteor.call("vote", 3, Session.get("currEdge"));
 		console.log("You pressed button pos three");
+		Clicked();
 	}
 });
+
+function Clicked(){
+	$(".button").slideUp(400)
+		.slideDown(400);
+	question.setText(ouredges);
+}
 
 function Question(){
 	var self = this;
@@ -64,8 +77,9 @@ function Question(){
 			self.clear();
 			return;
 		}
-		$("#q").text(ouredges[0].source.obj + " or " + ouredges[0].target.obj);
-		Session.set("currEdge", ouredges[0]);
+		var idx = Math.floor(Math.random() * ouredges.length);
+		$("#q").text(ouredges[idx].source.obj + " or " + ouredges[idx].target.obj);
+		Session.set("currEdge", ouredges[idx]);
 	};
 }
 
