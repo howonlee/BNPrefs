@@ -21,24 +21,31 @@ Meteor.startup(function(){
 Template.question.events({
 	// template data, if any, is available in 'this'
 	'click #neg3' : function () {
+		Meteor.call("vote", -3, Session.get("currEdge"));
 		console.log("You pressed button neg three");
 	},
 	'click #neg2' : function () {
+		Meteor.call("vote", -2, Session.get("currEdge"));
 		console.log("You pressed button neg two");
 	},
 	'click #neg1' : function () {
+		Meteor.call("vote", -1, Session.get("currEdge"));
 		console.log("You pressed button neg one");
 	},
 	'click #zero' : function () {
+		Meteor.call("vote", 0, Session.get("currEdge"));//this has a purpose, don't delete
 		console.log("You pressed button zero");
 	},
 	'click #pos1' : function () {
+		Meteor.call("vote", 1, Session.get("currEdge"));
 		console.log("You pressed button pos one");
 	},
 	'click #pos2' : function () {
+		Meteor.call("vote", 2, Session.get("currEdge"));
 		console.log("You pressed button pos two");
 	},
 	'click #pos3' : function () {
+		Meteor.call("vote", 3, Session.get("currEdge"));
 		console.log("You pressed button pos three");
 	}
 });
