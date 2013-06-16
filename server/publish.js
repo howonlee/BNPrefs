@@ -241,8 +241,6 @@ Meteor.methods({
 			  return 1;
 		  },
 	changeState: function(newState, oldState){
-					 console.log("we think newstate is:");
-					 console.log(newState);
 					 if (arguments.length === 1){
 						 console.log("argument length one entered for changeState");
 						 _.each(nodeStateInfo[newState], function(elem){
@@ -252,15 +250,14 @@ Meteor.methods({
 							 Edges.insert(elem);
 						 });
 					 } else {
-						 console.log("we think oldstate is:");
-						 console.log(oldState);
 						 oldEdge = stateToCache(oldState);
-
 						 if (oldEdge.find({}).count() === 0){
+							 console.log("we think that we're storing for first time");
 							 Edges.find({}).forEach(function(elem){
 								 oldEdge.insert(elem);
 							 });
 						 } else {
+							 console.log("we think that we're storing for nth time");
 							 Edges.find({}).forEach(function(elem){
 								 oldEdge.update(elem._id, {$set: {score: elem.score, votes: elem.votes}});
 							 });
@@ -276,10 +273,12 @@ Meteor.methods({
 						 var newEdge = stateToCache(newState);
 
 						 if (newEdge.find().count() === 0){
+							 console.log("we think that we're loading for first time");
 							 _.each(edgeStateInfo[newState], function(elem){
 								 Edges.insert(elem);
 							 });
 						 } else {
+							 console.log("we think that we're loading for nth time");
 							 newEdge.find({}).forEach(function(elem){
 								 Edges.insert(elem);
 							 });
