@@ -138,7 +138,7 @@ function Canvas(){
 		}
 		if (svg){
 			var force = d3.layout.force()
-				.charge(-1000)
+				.charge(-500)
 				.linkDistance(100)
 				.size([width, height]);
 			force.nodes(ournodes)
