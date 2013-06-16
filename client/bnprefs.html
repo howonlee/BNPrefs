@@ -1,5 +1,7 @@
 <head>
 	<title>Bayes Net Preferences</title>
+	<link href="./css/bootstrap.css" rel="stylesheet">
+	<link href="./css/bootstrap-responsive.css" rel="stylesheet">
 	<style>
 		.node {
 			stroke = #fff;
@@ -16,18 +18,20 @@
 <body>
   {{> question}}
   {{> admin}}
+  <script src="./js/bootstrap.min.js"></script>
 </body>
 
 <template name="question">
 <h1>Preference Elicitation</h1>
 <p id="q"></p>
-<input id="neg3" class="button" type="button" value="" />
-<input id="neg2" class="button" type="button" value="" />
-<input id="neg1" class="button" type="button" value="" />
-<input id="zero" class="button" type="button" value="" />
-<input id="pos1" class="button" type="button" value="" />
-<input id="pos2" class="button" type="button" value="" />
-<input id="pos3" class="button" type="button" value="" />
+<input id="neg3" class="button btn" type="button" value="-" />
+<input id="neg2" class="button btn" type="button" value="" />
+<input id="neg1" class="button btn" type="button" value="" />
+<input id="zero" class="button btn" type="button" value="0" />
+<input id="pos1" class="button btn" type="button" value="" />
+<input id="pos2" class="button btn" type="button" value="" />
+<input id="pos3" class="button btn" type="button" value="+" />
+<br/>
 </template>
 
 <template name="admin">
