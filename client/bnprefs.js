@@ -3,10 +3,6 @@ Surveys = new Meteor.Collection("surveys");
 var canvas;
 var data;
 var question;
-/*var currEdge = _.first(_.shuffle(Surveys.find({}).fetch()[0][0].edges));
-Session.set("currEdge", currEdge);
-var currQ = _.first(_.shuffle(currEdge.qs));
-Session.set("currQ", currQ);*/
 
 Meteor.startup(function(){
 	canvas = new Canvas();
