@@ -125,6 +125,16 @@ function Canvas(){
 		svg = d3.select('#vizwrapper').append('svg')
 			.attr('width', width)
 			.attr('height', height);
+		svg.append("defs").append("marker")
+			.attr("id", "varArrow")
+            .attr("refX", 9)
+            .attr("refY", 2)
+            .attr("markerUnits","strokeWidth")
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 4)
+            .attr("orient","auto")
+            .append("svg:path")
+            .attr("d","M 0,0 V 4 L6,2 Z");
 	};
 	createSvg();
 	self.clear = function(){
@@ -138,8 +148,8 @@ function Canvas(){
 		}
 		if (svg){
 			var force = d3.layout.force()
-				.charge(-500)
-				.linkDistance(100)
+				.charge(-700)
+				.linkDistance(200)
 				.size([width, height]);
 			force.nodes(ournodes)
 				.links(ouredges)
@@ -147,13 +157,13 @@ function Canvas(){
 			var edge = svg.selectAll(".edge")
 				.data(ouredges)
 				.enter().append("line")
-				.attr("class", "edge");
-
+				.attr("class", "edge")
+				.attr("marker-end", "url(#varArrow)");
 			var node = svg.selectAll(".node")
 				.data(ournodes)
 				.enter().append("circle")
 				.attr("class", "node")
-				.attr("r", 10)
+				.attr("r", 7)
 				.call(force.drag);
 
 			force.on("tick", function(){
