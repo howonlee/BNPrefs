@@ -1,8 +1,11 @@
 <head>
 	<title>Bayes Net Preferences</title>
-	<link href="./css/bootstrap.css" rel="stylesheet">
-	<link href="./css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="./flatui/css/bootstrap.css" rel="stylesheet">
+	<link href="./flatui/css/bootstrap-responsive.css" rel="stylesheet">
 	<style>
+		body{
+			background-image:url('../public/patt.png');
+		}
 		.node {
 			fill: #fff;
 			stroke: #ffccff;
@@ -23,17 +26,36 @@
 </body>
 
 <template name="question">
-<h1>Preference Elicitation</h1>
-<p id="q"></p>
-<input id="neg3" class="button btn" type="button" value="-" />
-<input id="neg2" class="button btn" type="button" value="" />
-<input id="neg1" class="button btn" type="button" value="" />
-<input id="zero" class="button btn" type="button" value="0" />
-<input id="pos1" class="button btn" type="button" value="" />
-<input id="pos2" class="button btn" type="button" value="" />
-<input id="pos3" class="button btn" type="button" value="+" />
+<div class="container">
+<div class="row-fluid well">
+	<div class="span1"></div>
+	<div class="span10">
+		<h1>Which would you prefer?</h1>
+		<div class="row-fluid">
+			<h4 id="q1" class="q span4"></h3>
+			<h3 class="span2"> - or - 
+			</h3>
+			<h4 id="q2" class="q span4"></h3>
+		</div>
+	</div>
+	<br/>
+	<div class="span3"></div>
+	<div class="span4">
+	<div class="btn-group well">
+		<button id="neg3" class="btn" >+</button>
+		<button id="neg2" class="btn">&lt;</button>
+		<button id="neg1" class="btn">&lt; </button>
+		<button id="zero" class="btn">0</button>
+		<button id="pos1" class="btn">&gt; </button>
+		<button id="pos2" class="btn">&gt; </button>
+		<button id="pos3" class="btn">+</button>
+	</div>
+</div>
+
+</div>
+</div>
 <br/>
-<ul class="nav nav-pills">
+<ul class="nav nav-pills well">
 	<li id="state0" class="active chooser"><a href="#">Maslow's Hierarchy</a></li>
 	<li id="state1" class="chooser"><a href="#">Current Generation Consoles</a></li>
 	<li id="state2" class="chooser"><a href="#">Phones</a></li>
@@ -43,8 +65,12 @@
 </template>
 
 <template name="admin">
-<h1>See Data</h1>
 {{#constant}}
-<div id="vizwrapper"></div>
+<div class="row well">
+	<div class="span2"></div>
+	<div class="span8">
+		<div id="vizwrapper"></div>
+	</div>
+</div>
 {{/constant}}
 </template>

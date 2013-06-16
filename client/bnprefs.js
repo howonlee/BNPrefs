@@ -68,9 +68,9 @@ Template.question.events({
 });
 
 function Clicked(){
-	$(".button").slideUp(400)
+	$(".btn").slideUp(400)
 		.slideDown(400);
-	$("#q").slideUp(400, function(){ question.setText(ouredges); })
+	$(".q").slideUp(400, function(){ question.setText(ouredges); })
 		.slideDown(400);
 }
 
@@ -103,7 +103,8 @@ function changeState(newState, oldState){
 function Question(){
 	var self = this;
 	self.clear = function(){
-		$("#q").text("");
+		$("#q1").text("");
+		$("#q2").text("");
 	};
 	self.setText = function(ouredges){
 		if (ouredges.length < 1){
@@ -111,7 +112,8 @@ function Question(){
 			return;
 		}
 		var idx = Math.floor(Math.random() * ouredges.length);
-		$("#q").text(ouredges[idx].source.obj + " or " + ouredges[idx].target.obj);
+		$("#q1").text(ouredges[idx].source.obj);
+		$("#q2").text(ouredges[idx].target.obj);
 		Session.set("currEdge", ouredges[idx]);
 	};
 }
@@ -158,7 +160,8 @@ function Canvas(){
 				.data(ouredges)
 				.enter().append("line")
 				.attr("class", "edge")
-				.attr("marker-end", "url(#varArrow)");
+				.attr("marker-end", "url(#varArrow)")
+				.attr("marker-start", "url(#varArrow)");
 			var node = svg.selectAll(".node")
 				.data(ournodes)
 				.enter().append("circle")
