@@ -45,11 +45,20 @@ Template.question.events({
 
 function Question(){
 	var self = this;
+	self.clear = function(){
+		$("#q").text("");
+	};
 	self.setText = function(data){
 		if (data.length < 1){
+			self.clear();
 			return;
 		}
-		$("#q").text(data[0][0].edges[0].qs[0]);
+		$("#q").text(data[0][0].edges[0].source.obj + " or " + data[0][0].edges[0].target.obj);
+		/*var nodes = data[0][0].nodes;
+		var currEdge = data[0][0].edges[0];
+		var src = currEdge.source;
+		var tar = currEdge.target;
+		$("#q").text(nodes[src]["obj"] + " or " + nodes[tar]["obj"]);*/
 	};
 }
 
