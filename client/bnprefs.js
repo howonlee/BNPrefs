@@ -122,8 +122,8 @@ function Question(){
 function Canvas(){
 	var self = this;
 	var svg;
-	var width = 700;
-	var height = 700;
+	var width = window.innerWidth;
+	var height = window.innerHeight;
 	var createSvg = function(){
 		svg = d3.select('#vizwrapper').append('svg')
 			.attr('width', width)
@@ -144,6 +144,13 @@ function Canvas(){
 		svg.remove();
 		createSvg();
 	};
+	//bit cheating here. but we need to resize whenever we rething things
+	window.onresize = function(event){
+		width = window.innerWidth;
+		height = window.innerHeight;
+		svg.attr("width", width)
+			.attr("height", height);
+	}
 	self.draw = function(ournodes, ouredges){
 		if (ournodes.length < 1){
 			self.clear();
@@ -151,7 +158,7 @@ function Canvas(){
 		}
 		if (svg){
 			var force = d3.layout.force()
-				.charge(-700)
+				.charge(-1500)
 				.linkDistance(200)
 				.size([width, height]);
 			force.nodes(ournodes)
@@ -165,20 +172,29 @@ function Canvas(){
 				.attr("marker-start", function(d) { if (d.score < 0){ return "url(#varArrow)"; }})
 				.style("stroke-width", function(d){ return Math.sqrt(d.votes); })
 				.style("stroke-opacity", function(d){ return Math.max(0.05, (1 / (1 + Math.pow(1.5, -Math.abs(d.score)))) - 0.5);});
-			var node = svg.selectAll(".node")
+
+			var node = svg.selectAll("g.node")
 				.data(ournodes)
-				.enter().append("circle")
+				.enter().append("g")
 				.attr("class", "node")
-				.attr("r", 7)
 				.call(force.drag);
+			node.append("circle")
+				.attr("r", 10);
+			node.append("image")
+				.attr("xlink:href", function(d) { return "./" + d.file; })
+				.attr("x", 15)
+				.attr("y", 15)
+				.attr("width", 50)
+				.attr("height", 50);
 
 			force.on("tick", function(){
 				edge.attr("x1", function(d){ return d.source.x; })
 					.attr("y1", function(d){ return d.source.y; })
 					.attr("x2", function(d){ return d.target.x; })
 					.attr("y2", function(d){ return d.target.y; });
-				node.attr("cx", function(d) { return d.x; })
-					.attr("cy", function(d) { return d.y; });
+
+				node.attr("transform", function(d){ return "translate(" + d.x + "," + d.y + ")"; });
+
 			});
 		}
 	}

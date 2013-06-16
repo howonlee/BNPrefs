@@ -15,6 +15,12 @@
 		.edge{
 			stroke: #ccaaff;
 		}
+		#or{
+			text-align:center;
+		}
+		#q2{
+			text-align:right;
+		}
 	</style>
 </head>
 
@@ -34,7 +40,7 @@
 		<h1 data-step="1" data-intro="This is a tool to determine your preferences.">Which would you prefer?</h1>
 		<div class="row-fluid">
 			<h4 id="q1" class="q span4" data-step="2" data-intro="You may like this better..."></h3>
-			<h3 class="span2"> - or - </h3>
+			<h3 id="or" class="span2"> - or - </h3>
 			<h4 id="q2" class="q span4" data-step="3" data-intro="... or this."></h3>
 		</div>
 	</div>
@@ -57,7 +63,7 @@
 </div>
 <br/>
 <ul class="nav nav-pills well" data-step="6" data-intro="You can also switch subjects by clicking on one of these topics.">
-	<li id="state0" class="active chooser"><a href="#">Maslow's Hierarchy</a></li>
+	<li id="state0" class="chooser"><a href="#">Maslow's Hierarchy</a></li>
 	<li id="state1" class="chooser"><a href="#">Current Generation Consoles</a></li>
 	<li id="state2" class="chooser"><a href="#">Phones</a></li>
 	<li id="state3" class="chooser"><a href="#">Pokemon</a></li>

@@ -57,8 +57,8 @@ var nodeStateInfo = [
 	[
 {name: "Bulbasaur", obj: "Bulbasaur", file:"pokemon/leaf.png"},
 {name: "Charmander", obj: "Charmander", file:"pokemon/fire.png"},
-{name: "Squirtle", obj: "Squirtle", file:"water.png"},
-{name: "Pikachu", obj: "Pikachu", file:"electricity.png"}
+{name: "Squirtle", obj: "Squirtle", file:"pokemon/water.png"},
+{name: "Pikachu", obj: "Pikachu", file:"pokemon/electricity.png"}
 ]
 ];
 var edgeStateInfo = [
