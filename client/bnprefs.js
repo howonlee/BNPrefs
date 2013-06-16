@@ -60,7 +60,11 @@ Template.question.events({
 		Meteor.call("vote", 3, Session.get("currEdge"));
 		console.log("You pressed button pos three");
 		Clicked();
-	}
+	},
+	'click #state0' : function(){ changeState(0); },
+	'click #state1' : function(){ changeState(1); },
+	'click #state2' : function(){ changeState(2); },
+	'click #state3' : function(){ changeState(3); },
 });
 
 function Clicked(){
@@ -68,6 +72,27 @@ function Clicked(){
 		.slideDown(400);
 	$("#q").slideUp(400, function(){ question.setText(ouredges); })
 		.slideDown(400);
+}
+
+function changeState(newState){
+	console.log("you picked a state");
+	Meteor.call("changeState", newState);
+	canvas.clear();
+	$(".chooser").removeClass("active");
+	switch(newState){
+		case 0:
+			$("#state0").addClass("active");
+			break;
+		case 1:
+			$("#state1").addClass("active");
+			break;
+		case 2:
+			$("#state2").addClass("active");
+			break;
+		case 3:
+			$("#state3").addClass("active");
+			break;
+	}
 }
 
 function Question(){
