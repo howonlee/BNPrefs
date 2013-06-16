@@ -162,7 +162,9 @@ function Canvas(){
 				.enter().append("line")
 				.attr("class", "edge")
 				.attr("marker-end", function(d) { if (d.score > 0){ return "url(#varArrow)"; }})
-				.attr("marker-start", function(d) { if (d.score < 0){ return "url(#varArrow)"; }});
+				.attr("marker-start", function(d) { if (d.score < 0){ return "url(#varArrow)"; }})
+				.style("stroke-width", function(d){ return Math.sqrt(d.votes); })
+				.style("stroke-opacity", function(d){ return Math.max(0.05, (1 / (1 + Math.pow(1.5, -Math.abs(d.score)))) - 0.5);});
 			var node = svg.selectAll(".node")
 				.data(ournodes)
 				.enter().append("circle")
