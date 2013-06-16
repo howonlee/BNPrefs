@@ -9,13 +9,15 @@ Meteor.startup(function(){
 	canvas = new Canvas();
 	question = new Question();
 	Deps.autorun(function(){
-		nodes = Nodes.find({}).fetch();
-		edges = Edges.find({}).fetch();
+		ournodes = Nodes.find({}).fetch();
+		ouredges = Edges.find({}).fetch();
 		if (canvas){
-			canvas.draw(nodes, edges);
+			Deps.nonreactive(function(){
+				canvas.draw(ournodes, ouredges);
+			});
 		}
 		if (question){
-			question.setText(edges);
+			question.setText(ouredges);
 		}
 	});
 });
@@ -57,21 +59,21 @@ function Question(){
 	self.clear = function(){
 		$("#q").text("");
 	};
-	self.setText = function(edges){
-		if (edges.length < 1){
+	self.setText = function(ouredges){
+		if (ouredges.length < 1){
 			self.clear();
 			return;
 		}
-		$("#q").text(edges[0].source.obj + " or " + edges[0].target.obj);
-		Session.set("currEdge", edges[0]);
+		$("#q").text(ouredges[0].source.obj + " or " + ouredges[0].target.obj);
+		Session.set("currEdge", ouredges[0]);
 	};
 }
 
 function Canvas(){
 	var self = this;
 	var svg;
-	var width = 1500;
-	var height = 1500;
+	var width = 700;
+	var height = 700;
 	var createSvg = function(){
 		svg = d3.select('#vizwrapper').append('svg')
 			.attr('width', width)
@@ -79,49 +81,40 @@ function Canvas(){
 	};
 	createSvg();
 	self.clear = function(){
-		d3.select('svg').remove();
+		svg.remove();
 		createSvg();
 	};
-	self.draw = function(nodes, edges){
-		if (nodes.length < 1 || edges.length < 1){
+	self.draw = function(ournodes, ouredges){
+		if (ournodes.length < 1){
 			self.clear();
 			return;
 		}
 		if (svg){
 			var force = d3.layout.force()
-				.charge(-2000)
+				.charge(-1000)
 				.linkDistance(100)
 				.size([width, height]);
+			force.nodes(ournodes)
+				.links(ouredges)
+				.start();
 			var edge = svg.selectAll(".edge")
-				.data(edges)
+				.data(ouredges)
 				.enter().append("line")
 				.attr("class", "edge");
 
-			var node = svg.selectAll("g.node")
-				.data(nodes)
-				.enter()
-				.append("g");
-
-			node.on("mouseover", function(d){
-				//do something later
-			})
+			var node = svg.selectAll(".node")
+				.data(ournodes)
+				.enter().append("circle")
+				.attr("class", "node")
+				.attr("r", 10)
 				.call(force.drag);
 
-			var circles = node.append("circle")
-				.attr("class", "node")
-				.attr("r", 20)
-				.style("fill", "blue");
-
-			force
-				.nodes(nodes)
-				.links(edges)
-				.start();
 			force.on("tick", function(){
 				edge.attr("x1", function(d){ return d.source.x; })
 					.attr("y1", function(d){ return d.source.y; })
 					.attr("x2", function(d){ return d.target.x; })
-					.attr("y2", function(d){ return d.target.y; })
-				circles.attr("cx", function(d) { return d.x; })
+					.attr("y2", function(d){ return d.target.y; });
+				node.attr("cx", function(d) { return d.x; })
 					.attr("cy", function(d) { return d.y; });
 			});
 		}

@@ -11,11 +11,9 @@ Meteor.publish("edges", function(){
 
 Meteor.methods({
 	vote: function(num, edge){
-			  console.log("VOTE COUNTED: " + num + " weight, to edge " + edge);
-			  //console.log(Surveys.find().fetch());
-			  edge.score = edge.score + num;
-			  edge.votes = edge.votes + 1;
-			  console.log(edge);
+			  console.log("VOTE COUNTED: " + num + " weight, to edge " + JSON.stringify(edge));
+			  Edges.update({source: edge.source, target: edge.target}, {$inc: {score: num}});
+			  console.log(JSON.stringify(Edges.find({source: edge.source, target: edge.target}).fetch()));
 			  return 1;
 		  },
 });
