@@ -4,10 +4,12 @@ Edges = new Meteor.Collection("edges");
 var canvas;
 var data;
 var question;
+var currState;
 
 Meteor.startup(function(){
 	canvas = new Canvas();
 	question = new Question();
+	currState = 0;
 	Deps.autorun(function(){
 		ournodes = Nodes.find({}).fetch();
 		ouredges = Edges.find({}).fetch();
