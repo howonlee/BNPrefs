@@ -161,8 +161,8 @@ function Canvas(){
 				.data(ouredges)
 				.enter().append("line")
 				.attr("class", "edge")
-				.attr("marker-end", "url(#varArrow)")
-				.attr("marker-start", "url(#varArrow)");
+				.attr("marker-end", function(d) { if (d.score > 0){ return "url(#varArrow)"; }})
+				.attr("marker-start", function(d) { if (d.score < 0){ return "url(#varArrow)"; }});
 			var node = svg.selectAll(".node")
 				.data(ournodes)
 				.enter().append("circle")
