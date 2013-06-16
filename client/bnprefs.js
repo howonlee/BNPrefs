@@ -64,7 +64,8 @@ Template.question.events({
 function Clicked(){
 	$(".button").slideUp(400)
 		.slideDown(400);
-	question.setText(ouredges);
+	$("#q").slideUp(400, function(){ question.setText(ouredges); })
+		.slideDown(400);
 }
 
 function Question(){
