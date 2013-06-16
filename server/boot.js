@@ -1,8 +1,6 @@
 Meteor.startup(function () {
-	if (Surveys.find().count() === 0){
-		var initSurvey = [{
-			name: "Maslow",
-			nodes: [
+	if (Nodes.find().count() === 0){
+			var nodes = [
 				{name: "Breathing", obj: "A breath of air when choking"},
 				{name: "Food", obj: "Food when starving"},
 				{name: "Water", obj: "Water when thirsty"},
@@ -35,8 +33,13 @@ Meteor.startup(function () {
 				{name: "Problem Solving", obj: "Your ability to solve problems"},
 				{name: "Lack of Prejudice", obj: "Your lack of prejudice"},
 				{name: "Acceptance of Facts", obj: "Acceptance of the facts"}
-			],
-			edges: [
+			];
+			_.each(nodes, function(elem){
+				Nodes.insert(elem);
+			});
+	}
+	if (Edges.find().count() === 0){
+			var edges = [
 	    		{"source":0, "target":7, "score":3, votes: 3},
 	    		{"source":0, "target":8, "score":3, votes: 3},
 	    		{"source":0, "target":9, "score":3, votes: 3},
@@ -155,8 +158,9 @@ Meteor.startup(function () {
 	    		{"source":21, "target":25, "score":3, votes: 3},
 	    		{"source":21, "target":26, "score":3, votes: 3},
 	    		{"source":21, "target":27, "score":3, votes: 3}
-			]
-		}];
-		Surveys.insert(initSurvey);
+			];
+			_.each(edges, function(elem){
+				Edges.insert(elem);
+			});
 	}
 });

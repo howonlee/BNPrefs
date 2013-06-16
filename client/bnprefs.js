@@ -1,4 +1,5 @@
-Surveys = new Meteor.Collection("surveys");
+Nodes = new Meteor.Collection("nodes");
+Edges = new Meteor.Collection("edges");
 
 var canvas;
 var data;
@@ -8,12 +9,13 @@ Meteor.startup(function(){
 	canvas = new Canvas();
 	question = new Question();
 	Deps.autorun(function(){
-		data = Surveys.find({}).fetch();
+		nodes = Nodes.find({}).fetch();
+		edges = Edges.find({}).fetch();
 		if (canvas){
-			canvas.draw(data);
+			canvas.draw(nodes, edges);
 		}
 		if (question){
-			question.setText(data);
+			question.setText(edges);
 		}
 	});
 });
@@ -55,21 +57,21 @@ function Question(){
 	self.clear = function(){
 		$("#q").text("");
 	};
-	self.setText = function(data){
-		if (data.length < 1){
+	self.setText = function(edges){
+		if (edges.length < 1){
 			self.clear();
 			return;
 		}
-		$("#q").text(data[0][0].edges[0].source.obj + " or " + data[0][0].edges[0].target.obj);
-		Session.set("currEdge", data[0][0].edges[0]);
+		$("#q").text(edges[0].source.obj + " or " + edges[0].target.obj);
+		Session.set("currEdge", edges[0]);
 	};
 }
 
 function Canvas(){
 	var self = this;
 	var svg;
-	var width = 500;
-	var height = 500;
+	var width = 1500;
+	var height = 1500;
 	var createSvg = function(){
 		svg = d3.select('#vizwrapper').append('svg')
 			.attr('width', width)
@@ -80,8 +82,8 @@ function Canvas(){
 		d3.select('svg').remove();
 		createSvg();
 	};
-	self.draw = function(data){
-		if (data.length < 1){
+	self.draw = function(nodes, edges){
+		if (nodes.length < 1 || edges.length < 1){
 			self.clear();
 			return;
 		}
@@ -91,12 +93,12 @@ function Canvas(){
 				.linkDistance(100)
 				.size([width, height]);
 			var edge = svg.selectAll(".edge")
-				.data(data[0][0].edges)
+				.data(edges)
 				.enter().append("line")
 				.attr("class", "edge");
 
 			var node = svg.selectAll("g.node")
-				.data(data[0][0].nodes)
+				.data(nodes)
 				.enter()
 				.append("g");
 
@@ -111,8 +113,8 @@ function Canvas(){
 				.style("fill", "blue");
 
 			force
-				.nodes(data[0][0].nodes)
-				.links(data[0][0].edges)
+				.nodes(nodes)
+				.links(edges)
 				.start();
 			force.on("tick", function(){
 				edge.attr("x1", function(d){ return d.source.x; })
