@@ -10,6 +10,7 @@ Meteor.startup(function(){
 	canvas = new Canvas();
 	question = new Question();
 	currState = 0;
+	introJs().start();
 	Deps.autorun(function(){
 		ournodes = Nodes.find({}).fetch();
 		ouredges = Edges.find({}).fetch();
